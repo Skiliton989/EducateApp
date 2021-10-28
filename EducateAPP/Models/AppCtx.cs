@@ -9,6 +9,6 @@ namespace EducateAPP.Models
             : base(options)
         {
             Database.EnsureCreated();
-        }
+        }        
     }
 }
