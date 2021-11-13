@@ -1,6 +1,6 @@
-﻿using EducateAPP.Models;
-using EducateAPP.ViewModel;
-using EducateAPP.ViewModels.Account;
+﻿using EducateApp.Models;
+using EducateApp.ViewModels;
+using EducateApp.ViewModels.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -11,11 +11,16 @@ namespace EducateApp.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(
+            UserManager<User> userManager, 
+            SignInManager<User> signInManager,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
         [HttpGet]
@@ -29,18 +34,17 @@ namespace EducateApp.Controllers
         [HttpPost]
         // теперь вы ввели значения и нажали кнопку "Зарегистрироваться", например
         // методом Post данные передаются через модель для представления RegisterViewModel
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(RegisterViewModel model)   
         {
             if (ModelState.IsValid)
             {
                 // создание экземпляра user класса User и установка его свойствам значениям из модели
-                User user = new User
-                {
-                    LastName = model.LastName,
-                    FirstName = model.FirstName,
-                    Patronymic = model.Patronymic,
-                    Email = model.Email,
-                    UserName = model.Email
+                User user = new User { 
+                    LastName=model.LastName, 
+                    FirstName=model.FirstName, 
+                    Patronymic=model.Patronymic, 
+                    Email = model.Email, 
+                    UserName = model.Email 
                 };
 
                 // добавляем пользователя
@@ -49,6 +53,10 @@ namespace EducateApp.Controllers
                 {
                     // установка куки
                     await _signInManager.SignInAsync(user, false);
+
+                    // если пользователь был успешно зарегистрирован, то он получает роль registeredUser
+                    await _userManager.AddToRoleAsync(user, "registeredUser");
+
                     return RedirectToAction("Index", "Home");
                 }
                 else

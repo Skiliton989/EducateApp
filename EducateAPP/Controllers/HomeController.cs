@@ -1,4 +1,4 @@
-﻿using EducateAPP.Models;
+﻿using EducateApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EducateAPP.Controllers
+namespace EducateApp.Controllers
 {
     public class HomeController : Controller
     {
@@ -19,11 +19,6 @@ namespace EducateAPP.Controllers
         }
 
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
         {
             return View();
         }

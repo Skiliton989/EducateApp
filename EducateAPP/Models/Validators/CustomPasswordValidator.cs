@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace EducateAPP.Models.Validators
+namespace EducateApp.Models.Validators
 {
     public class CustomPasswordValidator : IPasswordValidator<User>
     {
@@ -41,7 +41,5 @@ namespace EducateAPP.Models.Validators
             return Task.FromResult(errors.Count == 0 ?
                 IdentityResult.Success : IdentityResult.Failed(errors.ToArray()));
         }
-
     }
-
 }

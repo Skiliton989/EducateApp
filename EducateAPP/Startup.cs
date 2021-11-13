@@ -1,19 +1,14 @@
-using EducateAPP.Models;
-using EducateAPP.Models.Validators;
+using EducateApp.Models;
+using EducateApp.Models.Validators;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace EducateAPP
+namespace EducateApp
 {
     public class Startup
     {
@@ -30,9 +25,11 @@ namespace EducateAPP
             services.AddDbContext<AppCtx>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            // Добавление сервиса валидатора пароля
             services.AddTransient<IPasswordValidator<User>, CustomPasswordValidator>(
                 serv => new CustomPasswordValidator(8));
 
+            // Добавление сервиса валидатора пользователя
             services.AddTransient<IUserValidator<User>, CustomUserValidator>();
 
             services.AddIdentity<User, IdentityRole>()
@@ -59,14 +56,14 @@ namespace EducateAPP
 
             app.UseRouting();
 
-            app.UseAuthentication();
+            app.UseAuthentication();    // подключение аутентификации обязательно перед UseAuthorization()
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Account}/{action=Login}/{id?}");
             });
         }
     }

@@ -1,18 +1,16 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace EducateAPP.Models
+namespace EducateApp.Models
 {
     public class User : IdentityUser
     {
         //дополнительные поля для каждого пользователя
-        [Required(ErrorMessage = "Введите фамилию")]
+        //для преподавателя могут понадобиться данные о ФИО
+
+        [Required(ErrorMessage = "Введите фамилию")]   // сообщение об ошибке при валидации на стороне клиента
         [Display(Name = "Фамилия")]
-        public string LastName { get; set; }
+        public string LastName { get; set; }   //отображение Фамилия вместо LastName
 
         [Required(ErrorMessage = "Введите имя")]
         [Display(Name = "Имя")]
@@ -22,5 +20,7 @@ namespace EducateAPP.Models
         [Display(Name = "Отчество")]
         public string Patronymic { get; set; }
 
+
+        //навигационные свойства
     }
 }

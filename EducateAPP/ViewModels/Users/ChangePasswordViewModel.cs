@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace EducateAPP.ViewModels.Users
+namespace EducateApp.ViewModels.Users
 {
     public class ChangePasswordViewModel
     {
@@ -13,7 +9,7 @@ namespace EducateAPP.ViewModels.Users
 
         [Required(ErrorMessage = "Введите E-mail")]
         [Display(Name = "E-mail")]
-        [DataType(DataType.EmailAddress, ErrorMessage = "Введите корректный E-mail")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Введите корретный E-mail")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Введите пароль")]

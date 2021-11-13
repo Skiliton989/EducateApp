@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace EducateAPP.Models
+namespace EducateApp.Models
 {
     public class AppCtx : IdentityDbContext<User>
     {
@@ -9,6 +9,6 @@ namespace EducateAPP.Models
             : base(options)
         {
             Database.EnsureCreated();
-        }        
+        }
     }
 }

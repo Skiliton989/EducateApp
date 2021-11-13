@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace EducateAPP.ViewModel
+namespace EducateApp.ViewModels
 {
+    // ViewModel - модель для представления,
+    // т.е. какие свойства (поля) "модель" нужно заполнить на определенной странице Html "представление"
+    // на странице с регистрацией помимо E-mail и пароля нужно внести информацию о преподавателе - его ФИО
     public class RegisterViewModel
     {
         [Required(ErrorMessage = "Введите E-mail")]
