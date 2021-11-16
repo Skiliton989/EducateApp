@@ -1,4 +1,4 @@
-using EducateApp.Models;
+п»їusing EducateApp.Models;
 using EducateApp.Models.Validators;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,15 +25,16 @@ namespace EducateApp
             services.AddDbContext<AppCtx>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            // Добавление сервиса валидатора пароля
+            // Р”РѕР±Р°РІР»РµРЅРёРµ СЃРµСЂРІРёСЃР° РІР°Р»РёРґР°С‚РѕСЂР° РїР°СЂРѕР»СЏ
             services.AddTransient<IPasswordValidator<User>, CustomPasswordValidator>(
                 serv => new CustomPasswordValidator(8));
 
-            // Добавление сервиса валидатора пользователя
+            // Р”РѕР±Р°РІР»РµРЅРёРµ СЃРµСЂРІРёСЃР° РІР°Р»РёРґР°С‚РѕСЂР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
             services.AddTransient<IUserValidator<User>, CustomUserValidator>();
 
             services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<AppCtx>();
+                .AddEntityFrameworkStores<AppCtx>()
+                .AddDefaultTokenProviders();
 
             services.AddControllersWithViews();
         }
@@ -56,7 +57,7 @@ namespace EducateApp
 
             app.UseRouting();
 
-            app.UseAuthentication();    // подключение аутентификации обязательно перед UseAuthorization()
+            app.UseAuthentication();    // РїРѕРґРєР»СЋС‡РµРЅРёРµ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёРё РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ РїРµСЂРµРґ UseAuthorization()
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
