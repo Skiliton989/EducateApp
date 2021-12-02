@@ -180,7 +180,7 @@ namespace EducateApp.Controllers
                 return NotFound();
             }
 
-            return View(formOfStudy);
+            return PartialView(formOfStudy);
         }
 
         private bool FormOfStudyExists(short id)
