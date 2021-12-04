@@ -23,16 +23,24 @@ namespace EducateApp.Controllers
         }
 
         // GET: TypesOfTotals
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(TypeOfTotalSortState sortOrder = TypeOfTotalSortState.CertificateNameAsc)
         {
             IdentityUser user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
-            var appCtx = _context.TypesOfTotals
+            var typesOfTotals = _context.TypesOfTotals
                 .Include(s => s.User)
-                .Where(s => s.IdUser == user.Id)
-                .OrderBy(f => f.CertificateName);
+                .Where(s => s.IdUser == user.Id);
 
-            return View(await appCtx.ToListAsync());
+            ViewData["CertificateNameSort"] = sortOrder == TypeOfTotalSortState.CertificateNameAsc ? TypeOfTotalSortState.CertificateNameDesc : TypeOfTotalSortState.CertificateNameAsc;
+
+            typesOfTotals = sortOrder switch
+            {
+                TypeOfTotalSortState.CertificateNameDesc => typesOfTotals.OrderByDescending(s => s.CertificateName),
+                _ => typesOfTotals.OrderBy(s => s.CertificateName),
+            };
+
+            // возвращаем в представление полученный список записей
+            return View(await typesOfTotals.AsNoTracking().ToListAsync());
         }
 
         // GET: TypesOfTotals/Create
@@ -195,7 +203,7 @@ namespace EducateApp.Controllers
                 return NotFound();
             }
 
-            return View(TypeOfTotal);
+            return PartialView(TypeOfTotal);
         }
 
         private bool TypeOfTotalExists(short id)
